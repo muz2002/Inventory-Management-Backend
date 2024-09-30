@@ -1,6 +1,7 @@
 package com.example.final_project.item;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.CollectionId;
 
 @Entity
 @Table()
@@ -11,13 +12,15 @@ public class Item {
     private Long id;
 
     private String name;
-    private int quantity;
-    private int price;
+    @Column(nullable = true)
+    private Integer quantity;
+    @Column(nullable = true)
+    private Integer price;
 
     public Item() {
 
     }
-    public Item(String name, int quantity, int price) {
+    public Item(String name, Integer quantity, Integer price) {
         this.name = name;
         this.quantity = quantity;
         this.price = price;
@@ -40,19 +43,19 @@ public class Item {
         this.name = name;
     }
 
-    public int getQuantity() {
+    public Integer getQuantity() {
         return quantity;
     }
 
-    public void setQuantity(int quantity) {
+    public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
 
-    public int getPrice() {
+    public Integer getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(Integer price) {
         this.price = price;
     }
 }

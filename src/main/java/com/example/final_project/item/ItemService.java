@@ -14,7 +14,7 @@ public class ItemService {
     public ItemService(ItemRepository itemRepository) {
         this.itemRepository = itemRepository;
     }
-     public List<Item> getItems() {
+    public List<Item> getItems() {
         return itemRepository.findAll();
 
     };
@@ -30,4 +30,22 @@ public class ItemService {
         }
         itemRepository.deleteById(itemId);
     }
+
+    public void updateItem(Long itemId, Item itemDetails) {
+        Item existingItem = itemRepository.findById(itemId)
+                .orElseThrow(()-> new IllegalArgumentException("Item with id " + itemId + " does not exist"));
+
+        if (itemDetails.getName() != null && !itemDetails.getName().isEmpty()) {
+            existingItem.setName(itemDetails.getName());
+        };
+
+        if (itemDetails.getQuantity() != null){
+            existingItem.setQuantity(itemDetails.getQuantity());
+        };
+        if (itemDetails.getPrice() != null) {
+            existingItem.setPrice(itemDetails.getPrice());
+        };
+
+        itemRepository.save(existingItem);
+    };
 }
