@@ -1,7 +1,8 @@
-package com.example.final_project.item;
+package com.example.final_project.controller;
 
+import com.example.final_project.model.Item;
+import com.example.final_project.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

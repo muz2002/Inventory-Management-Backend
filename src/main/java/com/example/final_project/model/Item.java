@@ -1,7 +1,6 @@
-package com.example.final_project.item;
+package com.example.final_project.model;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.CollectionId;
 
 @Entity
 @Table()

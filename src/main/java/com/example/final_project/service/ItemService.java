@@ -1,7 +1,8 @@
-package com.example.final_project.item;
+package com.example.final_project.service;
 
+import com.example.final_project.model.Item;
+import com.example.final_project.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.config.ConfigDataResourceNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
