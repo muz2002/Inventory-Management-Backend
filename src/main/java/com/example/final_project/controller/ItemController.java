@@ -1,9 +1,10 @@
 package com.example.final_project.controller;
 
-import com.example.final_project.model.Item;
+import com.example.final_project.entity.Item;
 import com.example.final_project.service.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -22,7 +23,7 @@ public class ItemController {
         itemService.addNewItem(item);
         return item;
     }
-
+//    @PreAuthorize("hasAnyAuthority('')")
     @GetMapping
     public List<Item> getItems () {
         return  itemService.getItems();

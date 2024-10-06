@@ -1,6 +1,6 @@
 package com.example.final_project.service;
 
-import com.example.final_project.model.Item;
+import com.example.final_project.entity.Item;
 import com.example.final_project.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

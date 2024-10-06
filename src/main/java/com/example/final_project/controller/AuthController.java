@@ -1,57 +1,55 @@
 package com.example.final_project.controller;
 
-
-
-import com.example.final_project.model.User;
-import com.example.final_project.model.Role;
-import com.example.final_project.repository.UserRepository;
-import com.example.final_project.repository.RoleRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.*;
+import com.example.final_project.entity.RefreshToken;
+import com.example.final_project.entity.User;
+import com.example.final_project.service.AuthService;
+import com.example.final_project.service.JwtService;
+import com.example.final_project.service.RefreshTokenService;
+import com.example.final_project.utils.AuthResponse;
+import com.example.final_project.utils.LoginRequest;
+import com.example.final_project.utils.RefreshTokenRequest;
+import com.example.final_project.utils.RegisterRequest;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/auth")
+@RequestMapping("/api/v1/auth/")
 public class AuthController {
 
-    @Autowired
-    private UserRepository userRepository;
+    private final AuthService authService;
+    private final RefreshTokenService refreshTokenService;
+    private final JwtService jwtService;
 
-    @Autowired
-    private RoleRepository roleRepository;
-
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    // Registration endpoint
-    @PostMapping("/register")
-    public String registerUser(@RequestBody User user) {
-        // Check if username is already taken
-        if (userRepository.findByUsername(user.getUsername()) != null) {
-            return "Username already exists";
-        }
-
-        // Encrypt password
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setEnabled(true);
-
-        // Assign default role
-        Role defaultRole = roleRepository.findById("ROLE_USER").orElse(new Role("ROLE_USER"));
-        user.setRoles(Collections.singleton(defaultRole));
-
-        // Save user
-        userRepository.save(user);
-
-        return "User registered successfully";
+    public AuthController(AuthService authService, RefreshTokenService refreshTokenService, JwtService jwtService) {
+        this.authService = authService;
+        this.refreshTokenService = refreshTokenService;
+        this.jwtService = jwtService;
     }
 
-    // Login endpoint (not strictly necessary with HTTP Basic, but useful for JWT)
+    @PostMapping("/register")
+    public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest registerRequest) {
+        return ResponseEntity.ok(authService.register(registerRequest));
+    }
+
     @PostMapping("/login")
-    public String login() {
-        // Authentication is handled by Spring Security
-        return "Login successful";
+    public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
+        return ResponseEntity.ok(authService.login(loginRequest));
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<AuthResponse> refreshToken(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+
+        RefreshToken refreshToken = refreshTokenService.verifyRefreshToken(refreshTokenRequest.getRefreshToken());
+        User user = refreshToken.getUser();
+
+        String accessToken = jwtService.generateToken(user);
+
+        return ResponseEntity.ok(AuthResponse.builder()
+                .accessToken(accessToken)
+                .refreshToken(refreshToken.getRefreshToken())
+                .build());
     }
 }
-
