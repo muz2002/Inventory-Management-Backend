@@ -23,7 +23,7 @@ public class ItemController {
         itemService.addNewItem(item);
         return item;
     }
-//    @PreAuthorize("hasAnyAuthority('')")
+    @PreAuthorize("hasAnyAuthority('USER')")
     @GetMapping
     public List<Item> getItems () {
         return  itemService.getItems();
