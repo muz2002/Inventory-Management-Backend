@@ -24,6 +24,7 @@ public class ApplicationConfig {
                 .orElseThrow(() -> new UsernameNotFoundException("User not found with email: " + username));
     }
 
+
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
