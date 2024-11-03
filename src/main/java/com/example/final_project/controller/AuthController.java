@@ -10,10 +10,7 @@ import com.example.final_project.utils.LoginRequest;
 import com.example.final_project.utils.RefreshTokenRequest;
 import com.example.final_project.utils.RegisterRequest;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user_auth")
@@ -28,12 +25,10 @@ public class AuthController {
         this.refreshTokenService = refreshTokenService;
         this.jwtService = jwtService;
     }
-
     @PostMapping("/register")
     public ResponseEntity<AuthResponse> register(@RequestBody RegisterRequest registerRequest) {
         return ResponseEntity.ok(authService.register(registerRequest));
     }
-
     @PostMapping("/login")
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
         return ResponseEntity.ok(authService.login(loginRequest));

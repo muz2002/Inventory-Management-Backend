@@ -11,6 +11,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path = "/item")
+
 public class ItemController {
     private final ItemService itemService;
 
@@ -18,13 +19,12 @@ public class ItemController {
     public ItemController(ItemService itemService) {
         this.itemService = itemService;
     }
-    @PostMapping
+    @PostMapping(path = "/create-item")
     public Item createItem(@RequestBody Item item) {
         itemService.addNewItem(item);
         return item;
     }
-    @PreAuthorize("hasAnyAuthority('USER')")
-    @GetMapping
+    @GetMapping(path = "/list-items")
     public List<Item> getItems () {
         return  itemService.getItems();
     }

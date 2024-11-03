@@ -38,7 +38,7 @@ public class ItemService {
 
         if (itemDetails.getName() != null && !itemDetails.getName().isEmpty()) {
             existingItem.setName(itemDetails.getName());
-        };
+        }
 
         if (itemDetails.getQuantity() != null){
             existingItem.setQuantity(itemDetails.getQuantity());
