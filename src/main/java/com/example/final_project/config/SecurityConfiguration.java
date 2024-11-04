@@ -35,7 +35,7 @@ public class SecurityConfiguration {
                 .and()
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user_auth/**", "/forgotPassword/**")
+                        .requestMatchers("/user_auth/**", "/forgotPassword/**","/users/**")
                         .permitAll()
                         .requestMatchers(AUTH_WHITELIST).permitAll()
                         .anyRequest()
@@ -51,7 +51,7 @@ public class SecurityConfiguration {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173")); // Change this to your frontend URL
+        configuration.setAllowedOrigins(List.of("http://localhost:5173","http://localhost:8080")); // Change this to your frontend URL
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowCredentials(true);
         configuration.setAllowedHeaders(List.of("Authorization", "Content-Type"));

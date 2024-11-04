@@ -57,6 +57,7 @@ public class AuthService {
                 .accessToken(accessToken)
                 .refreshToken(refreshToken.getRefreshToken())
                 .name(user.getName())
+                .userId(user.getUserId())
                 .build();
     }
 }
