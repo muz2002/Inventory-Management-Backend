@@ -47,4 +47,11 @@ public class AuthController {
                 .refreshToken(refreshToken.getRefreshToken())
                 .build());
     }
+    @CrossOrigin
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout(@RequestBody RefreshTokenRequest refreshTokenRequest) {
+        refreshTokenService.invalidateRefreshToken(refreshTokenRequest.getRefreshToken());
+        return ResponseEntity.ok("Logout successful");
+    }
+
 }
