@@ -1,5 +1,6 @@
 package com.example.final_project.service;
 
+import com.example.final_project.dto.UserDTO;
 import com.example.final_project.entity.User;
 import com.example.final_project.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,8 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.HashMap;
+import java.util.List;
+import java.util.stream.Collectors;
 import java.util.Map;
 
 @Service
@@ -65,5 +68,14 @@ public class UserService {
         return user.getProfileImageUrl(); // Return the stored image filename
     }
 
-    // Other user-related methods
+    public List<UserDTO> getUsers() {
+        return userRepository.findAll().stream()
+                .map(this::convertToDTO)
+                .collect(Collectors.toList());
+    }
+
+    private UserDTO convertToDTO(User user) {
+        return new UserDTO(user.getUserId(), user.getName(), user.getUsername(), user.getEmail());
+    }
+
 }

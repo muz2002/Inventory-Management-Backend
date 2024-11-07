@@ -28,10 +28,12 @@ public class ItemController {
     public List<Item> getItems () {
         return  itemService.getItems();
     }
+
     @DeleteMapping(path = "{itemId}")
     public void deleteItem(@PathVariable("itemId") Long itemId) {
          itemService.deleteItem(itemId);
     }
+
     @PutMapping(path = "{itemId}")
     public ResponseEntity<Item> updateItem(@PathVariable("itemId") Long itemId,
                                      @RequestParam(required = false)@RequestBody Item itemDetails) {

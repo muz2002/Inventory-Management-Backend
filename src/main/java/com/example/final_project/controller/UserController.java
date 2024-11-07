@@ -11,8 +11,8 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -61,5 +61,10 @@ public class UserController {
         } catch (IOException e) {
             return ResponseEntity.internalServerError().build(); // Return 500 on IO exceptions
         }
+    }
+
+    @GetMapping(path = "list-users/")
+    public List<UserDTO> getUser() {
+        return userService.getUsers();
     }
 }
