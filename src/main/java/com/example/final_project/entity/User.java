@@ -17,6 +17,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
+@Setter
 @Builder
 public class User implements UserDetails {
     @Id
@@ -48,6 +49,10 @@ public class User implements UserDetails {
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
+    @ManyToOne
+    @JoinColumn(name = "country_id")
+    private Country country;
+
     @Setter
     private String profileImageUrl;
 
@@ -64,6 +69,10 @@ public class User implements UserDetails {
     @Override
     public String getUsername() {
         return email;
+    }
+
+    public String getActualUsername() {
+        return username;
     }
 
     @Override
@@ -85,5 +94,7 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
+
 
 }

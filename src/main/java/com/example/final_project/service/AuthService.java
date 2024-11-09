@@ -1,7 +1,9 @@
 package com.example.final_project.service;
 
+import com.example.final_project.entity.Country;
 import com.example.final_project.entity.User;
 import com.example.final_project.entity.UserRole;
+import com.example.final_project.repository.CountryRepository;
 import com.example.final_project.repository.UserRepository;
 import com.example.final_project.utils.AuthResponse;
 import com.example.final_project.utils.LoginRequest;
@@ -19,16 +21,32 @@ public class AuthService {
 
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final CountryRepository countryRepository;
     private final JwtService jwtService;
     private final RefreshTokenService refreshTokenService;
     private final AuthenticationManager authenticationManager;
 
+    // src/main/java/com/example/final_project/service/AuthService.java
     public AuthResponse register(RegisterRequest registerRequest) {
+        Country country;
+
+        if (registerRequest.getCountryId() != null) {
+            country = countryRepository.findById(registerRequest.getCountryId())
+                    .orElseThrow(() -> new RuntimeException("Country not found"));
+        } else if (registerRequest.getCountryName() != null && !registerRequest.getCountryName().isEmpty()) {
+            country = new Country();
+            country.setCountryName(registerRequest.getCountryName());
+            country = countryRepository.save(country);
+        } else {
+            throw new RuntimeException("Country information is required");
+        }
+
         var user = User.builder()
                 .name(registerRequest.getName())
                 .email(registerRequest.getEmail())
                 .username(registerRequest.getUsername())
                 .password(passwordEncoder.encode(registerRequest.getPassword()))
+                .country(country)
                 .role(UserRole.USER)
                 .build();
 
@@ -39,6 +57,11 @@ public class AuthService {
         return AuthResponse.builder()
                 .accessToken(accessToken)
                 .refreshToken(refreshToken.getRefreshToken())
+                .userId(savedUser.getUserId())
+                .name(savedUser.getName())
+                .username(savedUser.getActualUsername()) // Use getActualUsername() here
+                .email(savedUser.getEmail())
+                .country(savedUser.getCountry())
                 .build();
     }
 

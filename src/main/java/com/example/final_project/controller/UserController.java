@@ -35,9 +35,10 @@ public class UserController {
     @GetMapping("/{userId}")
     public ResponseEntity<UserDTO> getUser(@PathVariable Integer userId) {
         User user = userService.getUserById(userId);
-        UserDTO userDTO = new UserDTO(user.getUserId(), user.getName(), user.getUsername(), user.getEmail());
+        UserDTO userDTO = new UserDTO(user.getUserId(), user.getName(), user.getUsername(), user.getEmail(), user.getCountry());
         return ResponseEntity.ok(userDTO);
     }
+
 
     @GetMapping("/profileImage/{userId}")
     public ResponseEntity<byte[]> getProfileImage(@PathVariable Integer userId) {
@@ -63,8 +64,20 @@ public class UserController {
         }
     }
 
-    @GetMapping(path = "list-users/")
+    @GetMapping(path = "/list-users")
     public List<UserDTO> getUser() {
         return userService.getUsers();
     }
+
+    @DeleteMapping(path = "{userId}")
+    public void deleteUser(@PathVariable("userId") Integer userId) {
+        userService.deleteUser(userId);
+    }
+    @PutMapping(path = "{userId}")
+    public ResponseEntity<User> updateUser(@PathVariable("userId") Integer userId,
+                                           @RequestParam(required = false) @RequestBody User user) {
+        userService.updateUser(userId, user);
+        return ResponseEntity.ok().build();
+    }
+
 }

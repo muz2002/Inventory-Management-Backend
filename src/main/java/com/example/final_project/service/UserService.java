@@ -69,13 +69,39 @@ public class UserService {
     }
 
     public List<UserDTO> getUsers() {
-        return userRepository.findAll().stream()
-                .map(this::convertToDTO)
+        List<User> users = userRepository.findAll();
+        return users.stream()
+                .map(user -> new UserDTO(user.getUserId(), user.getName(), user.getActualUsername(), user.getEmail(), user.getCountry()))
                 .collect(Collectors.toList());
     }
 
     private UserDTO convertToDTO(User user) {
-        return new UserDTO(user.getUserId(), user.getName(), user.getUsername(), user.getEmail());
+        return new UserDTO(user.getUserId(), user.getName(), user.getUsername(), user.getEmail(), user.getCountry());
     }
 
+    public void deleteUser(Integer userId) {
+        boolean exist = userRepository.existsById(userId);
+        if (!exist) {
+            throw new IllegalArgumentException("User with id " + userId + " does not exist");
+        }
+        userRepository.deleteById(userId);
+    }
+    public void updateUser(Integer userId, User user) {
+        User existingUser = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User with id " + userId + " does not exist"));
+
+        if (user.getName() != null && !user.getName().isEmpty()) {
+            existingUser.setName(user.getName());
+        }
+
+        if (user.getUsername() != null && !user.getUsername().isEmpty()) {
+            existingUser.setUsername(user.getUsername());
+        }
+
+        if (user.getEmail() != null && !user.getEmail().isEmpty()) {
+            existingUser.setEmail(user.getEmail());
+        }
+
+        userRepository.save(existingUser);
+    }
 }

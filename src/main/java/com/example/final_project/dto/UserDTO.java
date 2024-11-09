@@ -1,21 +1,26 @@
 package com.example.final_project.dto;
 
+import com.example.final_project.entity.Country;
+
 public class UserDTO {
     private Integer userId;
     private String name;
     private String username;
     private String email;
+    private Country country;
 
     public UserDTO() {
-
     }
 
-    public UserDTO(Integer userId, String name, String username, String email) {
+    public UserDTO(Integer userId, String name, String username, String email, Country country) {
         this.userId = userId;
         this.name = name;
         this.username = username;
         this.email = email;
+        this.country = country;
     }
+
+    // Getters and setters...
 
     public Integer getUserId() {
         return userId;
@@ -48,6 +53,12 @@ public class UserDTO {
     public void setEmail(String email) {
         this.email = email;
     }
-    // Constructors, getters, and setters...
-}
 
+    public Country getCountry() {
+        return country;
+    }
+
+    public void setCountry(Country country) {
+        this.country = country;
+    }
+}
