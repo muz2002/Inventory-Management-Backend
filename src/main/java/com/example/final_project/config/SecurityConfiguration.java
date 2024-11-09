@@ -33,7 +33,7 @@ public class SecurityConfiguration {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/user_auth/**", "/user_auth/register", "/forgotPassword/**", "/users/**", "/country/create-country", "/country/list-countries")
+                        .requestMatchers("/user_auth/**",  "/forgotPassword/**", "/users/**", "/country/**")
                         .permitAll()
                         .requestMatchers(AUTH_WHITELIST).permitAll()
                         .anyRequest()
