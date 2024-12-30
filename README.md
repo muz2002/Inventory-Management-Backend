@@ -27,6 +27,9 @@ This is a Spring Boot application for managing users, including functionalities 
 - Lombok
 - Springdoc OpenAPI
 
+## Project Short Demo
+https://github.com/user-attachments/assets/154f9528-231d-4e5b-82ad-263b3e5bf122
+
 ## Getting Started
 
 ### Prerequisites
@@ -245,3 +248,4 @@ The project uses Gradle for build and dependency management. Key dependencies in
 ## License
 
 This project is licensed under the MIT License.
+
