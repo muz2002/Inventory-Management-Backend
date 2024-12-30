@@ -73,10 +73,10 @@ public class UserController {
     public void deleteUser(@PathVariable("userId") Integer userId) {
         userService.deleteUser(userId);
     }
-    @PutMapping(path = "{userId}")
-    public ResponseEntity<User> updateUser(@PathVariable("userId") Integer userId,
-                                           @RequestParam(required = false) @RequestBody User user) {
-        userService.updateUser(userId, user);
+    @PutMapping(path = "/update-user/{userId}")
+    public ResponseEntity<UserDTO> updateUser(@PathVariable("userId") Integer userId,
+                                              @RequestBody UserDTO userDTO) {
+        userService.updateUser(userId, userDTO);
         return ResponseEntity.ok().build();
     }
 

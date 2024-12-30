@@ -86,22 +86,15 @@ public class UserService {
         }
         userRepository.deleteById(userId);
     }
-    public void updateUser(Integer userId, User user) {
-        User existingUser = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User with id " + userId + " does not exist"));
+    public void updateUser(Integer userId, UserDTO userDTO) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        if (user.getName() != null && !user.getName().isEmpty()) {
-            existingUser.setName(user.getName());
-        }
+        user.setName(userDTO.getName());
+        user.setUsername(userDTO.getUsername());
+        user.setEmail(userDTO.getEmail());
+        user.setCountry(userDTO.getCountry());
 
-        if (user.getUsername() != null && !user.getUsername().isEmpty()) {
-            existingUser.setUsername(user.getUsername());
-        }
-
-        if (user.getEmail() != null && !user.getEmail().isEmpty()) {
-            existingUser.setEmail(user.getEmail());
-        }
-
-        userRepository.save(existingUser);
+        userRepository.save(user);
     }
 }
