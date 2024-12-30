@@ -1,6 +1,20 @@
 # Final Project
 
 This is a Spring Boot application for managing users, including functionalities for user authentication, profile image upload, and more. This project is part of an inventory management system and is not yet complete. Future functionalities will include searching by QR code and live chat between users.
+## Table of Contents
+
+- [Technologies Used](#technologies-used)
+- [Getting Started](#getting-started)
+    - [Prerequisites](#prerequisites)
+    - [Installation](#installation)
+- [API Endpoints](#api-endpoints)
+    - [User Endpoints](#user-endpoints)
+- [Swagger Documentation](#swagger-documentation)
+- [Project Structure](#project-structure)
+- [Frontend](#frontend)
+- [Security Configuration](#security-configuration)
+- [Build and Dependency Management](#build-and-dependency-management)
+- [License](#license)
 
 ## Technologies Used
 
